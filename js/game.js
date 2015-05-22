@@ -9,7 +9,8 @@ var SimonWrapper = React.createClass({
 				gameOver:0,
 				sequence:[],
 				pressedSequence:[],
-				gameNumber:1
+				gameNumber:1,
+				audioContext:new AudioContext()
 			};
 	},
 	 incrementLeftTop: function(){
@@ -97,15 +98,28 @@ var SimonWrapper = React.createClass({
 			duration:'slow'
 		},'linear');
 	},
+	audio:function(soundPath){
+	 var context = this.state.audioContext;
+    // Create lineOut
+    var lineOut = new WebAudiox.LineOut(this.state.audioContext);
+
+    // load a sound and play it immediatly
+    WebAudiox.loadBuffer(context, soundPath, function(buffer){
+        // init AudioBufferSourceNode
+        var source  = context.createBufferSource();
+        source.buffer   = buffer;
+        source.connect(lineOut.destination);
+
+        // start the sound now
+        source.start(0);
+    });
+	},
 	setSequenceValue: function(){	
 		var totalElements = this.state.sequence.length;
 		var totalElementsPressed = this.state.pressedSequence.length;
-		var audioGood = $('audio')[0];
-		var audioBad = $('audio')[1];
 		
 		if (totalElementsPressed <= totalElements){
-			
-			audioGood.play();
+			this.audio(constants.okSound);
 			for(var arrayCount=0; arrayCount <= totalElementsPressed - 1; arrayCount++){			
 				if(this.state.pressedSequence[arrayCount] === this.state.sequence[arrayCount]){
 					if ((arrayCount+1) === totalElements){
@@ -113,7 +127,7 @@ var SimonWrapper = React.createClass({
 						this.increaseSecuence();
 					}
 				} else {
-					audioBad.play();
+					this.audio(constants.errorSound);
 					this.gameOver();
 					break;
 				}
@@ -128,17 +142,13 @@ var SimonWrapper = React.createClass({
 		this.setState({gameNumber: this.state.gameNumber});
 		this.generateSequence();
 		this.containerRotation(0);
-		console.log(this.state.sequence);
-		console.log(this.state.pressedSequence);
 	},
 	gameOver: function() {
 		$('.gameOver').show();
-		$('.simonContainer').hide();
 	},
 	clear: function(){
 		this.state.sequence = [];
 		this.state.pressedSequence = [];
-		
 		this.setState( { rightBottom: 0 } );
 		this.setState( { leftBottom: 0 } );
 		this.setState( { rightTop: 0 } );
@@ -254,7 +264,7 @@ var NewGame = React.createClass({
   },
   render: function(){
     return (
-      <a onClick={this.clickHandler} className="newGame medium alert button">New Game</a>
+      <a onClick={this.clickHandler} className="newGame medium alert button">Start Game</a>
     );
   }
 });
@@ -272,4 +282,89 @@ var GameOver = React.createClass({
 React.render(
   <SimonWrapper/>,
 	document.getElementsByClassName('content')[0]
+);
+
+/*External Components*/
+var scoreData = [
+	{
+		id:1,
+		owner:'Andres',
+		score: 36,
+		date: new Date()
+	},
+	{
+		id:2,
+		owner:'Lilandra',
+		score: 4,
+		date: new Date()
+	},
+	{
+		id:3,
+		owner:'Jose',
+		score: 6,
+		date: new Date()
+	}
+];
+
+var IntroWrapper = React.createClass({
+  render: function(){
+    return (
+			<div className="introWrapper">
+				<h2>Welcome to Brain Break!</h2>
+				<p className="panel">Bran Break! is a game based on the principles of "Saimon Says" a game to
+				exercise your memory, Brain Break has new challenges for your memory!</p>
+				<div className="large-centered large-7 columns">
+					<p>How are your memory today? try! and do your best!</p>
+					<ul className="button-group round">
+						<li><a href="#" className="button">Basic</a></li>
+						<li><a href="#" className="button yellow">Rotational</a></li>
+						<li><a href="#" className="button orange">Overlap</a></li>
+						<li><a href="#" className="button red">Blind</a></li>
+					</ul>
+				</div>
+				<div className="best-points">
+					<ScoresTable scoreData="scoreData" />
+				</div>
+			</div>
+    );
+  }
+});
+
+
+var ScoreRow = React.createClass({
+	render: function(){
+		return(
+			<tr>
+				<td>{this.props.score.owner}</td>
+				<td>{this.props.score.score}</td>
+				<td>{this.props.score.date}</td>
+			</tr>
+		);
+	}
+});
+
+var ScoresTable = React.createClass({
+  render: function() {
+		var rows = this.props.scoreData.map(function(score) {
+				return <ScoreRow key={score.id} score={score} />;
+		});
+    return (
+      <div className="scoresTable">
+				<table>
+					<thead>
+						<tr>Owner</tr>
+						<tr>Score</tr>
+					</thead>
+					<tbody>
+						{rows}
+					</tbody>
+				</table>
+			</div>
+    );
+  }
+});
+
+React.render(
+  <IntroWrapper />,
+	document.getElementsByClassName('intro-content')[0]
 );
