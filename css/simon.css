@@ -21,15 +21,13 @@ body {
 	padding: 20px;
 }
 
-.game {
-	
-}
-
 .simonContainer {
 	background-color: #2d2d2d;
 	border-radius: 50%;
 	box-shadow: 0px 0px 20px 5px #888888;
 	height: 400px;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
 	width: 400px;
 	/*
@@ -69,24 +67,32 @@ body {
 }
 
 .simonLeftTop {
-	background-color: #2EFE2E;
   border-top-left-radius: 100%;	
 }
+	.simonLeftTopBaseColor{
+		background-color: #2EFE2E;	
+	}
 
 .simonRightTop {
-	background-color: #FF0000;
 	border-top-right-radius: 100%;	
 }
+	.simonRightTopBaseColor {
+		background-color: #FF0000;
+	}
 
 .simonLeftBottom {
-	background-color: #FFFF00;
 	border-bottom-left-radius: 100%;	
 }
+	.simonLeftBottomBaseColor{
+		background-color: #FFFF00;
+	}
 
 .simonRightBottom {
-	background-color: #0080FF;
 	border-bottom-right-radius: 100%;	
 }
+	.simonRightBottomBaseColor{
+		background-color: #0080FF;
+	}
 
 .selected-side {
 	background-color: #fff;
@@ -109,7 +115,8 @@ body {
 	}
 
 .gameOver{
-	display: none;	
+	display: none;
+	text-align: center;
 }
 
 .yellow {
@@ -124,6 +131,10 @@ body {
 	background-color: #CE3C0C;
 }
 
+.scoresTable table {
+	width: 100%;
+}
+
 @-webkit-keyframes pulse {
   0% {
     -webkit-transform: rotate(0deg);
@@ -132,3 +143,10 @@ body {
    -webkit-transform: rotate(360deg);
   }
 }
+
+.actionButtons {
+	margin-top: 30px;
+}
+	.actionButtons a.button {
+		width: 50%;
+	}

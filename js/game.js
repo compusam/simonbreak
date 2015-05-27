@@ -1,7 +1,32 @@
+var GameVariables = (function(){
+	var level = 'basic';
+	var introContainer = $('.intro');
+	var gameContainer = $('.game');
+	var initialColors = {
+		leftTopBackground:'#2EFE2E',
+		leftBottomBackground:'#FFFF00',
+		rightTopBackground:'#FF0000',
+		rightBottomBackground:'#0080FF'
+	};
+			
+	var changeLevel = function(levelValue) {
+		this.level = levelValue;
+		console.log(this.level);
+	};
+	
+	return{
+		introContainer:introContainer,
+		gameContainer:gameContainer,
+		level: level,
+		changeLevel:changeLevel,
+		initialColors:initialColors
+	}
+})();
+
 var SimonWrapper = React.createClass({
 	getInitialState: function(){
 			return { 
-				leftTop:0,
+				leftTop:0,				
 				leftBottom:0,
 				rightTop:0,
 				rightBottom:0,
@@ -10,14 +35,23 @@ var SimonWrapper = React.createClass({
 				sequence:[],
 				pressedSequence:[],
 				gameNumber:1,
-				audioContext:new AudioContext()
+				audioContext:new AudioContext(),
+				maxScore:0
 			};
 	},
+	componentDidMount: function() {
+		 window.addEventListener('keydown', this.handleKeyPress);
+	},
+	handleKeyPress: function(e){
+		console.log('Codigo',e.keyCode);
+	},
 	 incrementLeftTop: function(){
+		 console.log('ACA');
 		this.setState( { leftTop:  this.state.leftTop + 1 } );
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(1);	
 		this.setState({pressedSequence: this.state.pressedSequence});
+		this.audio(constants.leftTop);
 		this.setSequenceValue();
   },
 	incrementRightTop: function(){
@@ -25,6 +59,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(2);	
 		this.setState({pressedSequence: this.state.pressedSequence});
+		this.audio(constants.rightTop);
 		this.setSequenceValue();
   },
 	incrementLeftBottom: function(){
@@ -32,6 +67,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(4);	
 		this.setState({pressedSequence: this.state.pressedSequence});
+		this.audio(constants.leftBottom);
 		this.setSequenceValue();
   },
 	incrementRightBottom: function(){
@@ -39,6 +75,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(3);	
 		this.setState({pressedSequence: this.state.pressedSequence});
+		this.audio(constants.rightBottom);
 		this.setSequenceValue();
   },
 	generateSequence: function() {
@@ -85,8 +122,22 @@ var SimonWrapper = React.createClass({
 		this.state.gameNumber = this.state.gameNumber + 1;
 		this.setState({gameNumber: this.state.gameNumber});
 		this.generateSequence();
-		var randomRotation =  Math.floor((Math.random()* 360)+1);
-		this.containerRotation(randomRotation);
+		this.gameLevel();
+		
+	},
+	gameLevel: function(){
+		switch (GameVariables.level) {
+			case 'rotational':
+				var randomRotation =  Math.floor((Math.random()* 360)+1);
+				this.containerRotation(randomRotation);		
+				break;
+			case 'overlap':
+				this.containerOverlap();
+				break;
+			case 'blind':
+				this.containerBlind();
+				break;
+		}
 	},
 	containerRotation:function(angle){
 		$('.simonContainer').animate({  borderSpacing: angle }, {
@@ -97,6 +148,44 @@ var SimonWrapper = React.createClass({
 		},
 			duration:'slow'
 		},'linear');
+	},
+	containerOverlap: function(){
+		var blocks = $('.simonBlock');
+		var bgColors = [];
+		
+		$.each(blocks, function(key, value){
+			bgColors.push($(value).css('background-color'));
+		});
+			
+		$.each(blocks, function(key,value){			
+			$(value).css('background-color', bgColors[(bgColors.length - 1)-key]);
+		});
+	},
+	containerBlind: function(){
+		
+		var keyPressed;
+			
+		
+		
+								
+		console.log('DATA', keyPressed);
+		
+		switch (keyPressed){
+			case 113:
+				this.incrementLeftTop;
+				this.audio(constants.leftTop);
+			break;
+			case 119:
+				this.incrementRightTop;
+			break;
+			case 97:
+				this.incrementLeftBottom;
+			break;
+			case 115:
+				this.incrementRightBottom;
+			break;
+		}
+		
 	},
 	audio:function(soundPath){
 	 var context = this.state.audioContext;
@@ -119,7 +208,6 @@ var SimonWrapper = React.createClass({
 		var totalElementsPressed = this.state.pressedSequence.length;
 		
 		if (totalElementsPressed <= totalElements){
-			this.audio(constants.okSound);
 			for(var arrayCount=0; arrayCount <= totalElementsPressed - 1; arrayCount++){			
 				if(this.state.pressedSequence[arrayCount] === this.state.sequence[arrayCount]){
 					if ((arrayCount+1) === totalElements){
@@ -135,16 +223,43 @@ var SimonWrapper = React.createClass({
 		}				
 	},
 	startGame: function() {
+		this.clearGame();
+		this.generateSequence();
+		this.gameLevel();
+	},
+	returnIntro: function(){
+		this.clearGame();
+		$(GameVariables.introContainer).removeClass('zoomOutRight');
+		$(GameVariables.introContainer).addClass('zoomInRight');
+		$(GameVariables.introContainer).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', this.returnIntroAnimation());
+	},
+	returnIntroAnimation: function(){
+		$(GameVariables.gameContainer).addClass('hide');
+		$(GameVariables.introContainer).removeClass('hide');
+		$(GameVariables.gameContainer).removeClass('animated zoomInRight');	
+		$('.newGame').text('Start Game');
+	},
+	gameOver: function() {
+		if (this.state.gameNumber > this.state.maxScore) {
+			this.state.maxScore = this.state.gameNumber;
+			this.setState({maxScore: this.state.maxScore });
+		} 
+		$('.gameOver').show();
+		$('.newGame').text('Restart Game');
+	},
+	clearGame: function() {
 		this.clear();
 		$('.gameOver').hide();
 		$('.simonContainer').show();
 		this.state.gameNumber = 1;
 		this.setState({gameNumber: this.state.gameNumber});
-		this.generateSequence();
 		this.containerRotation(0);
-	},
-	gameOver: function() {
-		$('.gameOver').show();
+		$.each($('.simonBlock'), function(key, value){
+			$(value).hasClass('simonLeftTop') ? $(value).css('background-color', GameVariables.initialColors.leftTopBackground ) : '';
+			$(value).hasClass('simonRightTop') ? $(value).css('background-color', GameVariables.initialColors.rightTopBackground ) : '';
+			$(value).hasClass('simonLeftBottom') ? $(value).css('background-color', GameVariables.initialColors.leftBottomBackground ) : '';
+			$(value).hasClass('simonRightBottom') ? $(value).css('background-color',GameVariables.initialColors.rightBottomBackground ) : '';			
+		});
 	},
 	clear: function(){
 		this.state.sequence = [];
@@ -169,7 +284,8 @@ var SimonWrapper = React.createClass({
 				</div>
 				<div className="actionButtons">
 					<NewGame onClick={this.startGame} />
-					<GameOver />
+					<ReturnIntro onClick={this.returnIntro} />
+					<GameOver maxScore={this.state.maxScore} />
 				</div>
       </div>
     );
@@ -198,7 +314,7 @@ var SimonLeftTop = React.createClass({
 	},
   render: function(){
     return (
-      <div onClick={this.clickHandler}  onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonLeftTop">
+      <div onClick={this.clickHandler}  onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonLeftTop simonLeftTopBaseColor simonBlock">
       </div>
     );
   }
@@ -216,7 +332,7 @@ var SimonRightTop = React.createClass({
 	},
   render: function(){
     return (
-      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonRightTop">
+      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonRightTop simonRightTopBaseColor simonBlock">
       </div>
     );
   }
@@ -234,7 +350,7 @@ var SimonLeftBottom = React.createClass({
 	},
   render: function(){
     return (
-      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonLeftBottom">
+      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonLeftBottom simonLeftBottomBaseColor simonBlock">
       </div>
     );
   }
@@ -252,7 +368,7 @@ var SimonRightBottom = React.createClass({
 	},
   render: function(){
     return (
-      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonRightBottom">
+      <div onClick={this.clickHandler} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} className="simonRightBottom simonRightBottomBaseColor simonBlock">
       </div>
     );
   }
@@ -269,11 +385,23 @@ var NewGame = React.createClass({
   }
 });
 
+var ReturnIntro = React.createClass({
+	clickHandler: function (){
+		this.props.onClick();
+  },
+  render: function(){
+    return (
+      <a onClick={this.clickHandler} className="returnIntro medium button">Return</a>
+    );
+  }
+});
+
 var GameOver = React.createClass({
   render: function(){
     return (
       <div className="gameOver">
 				<h3>Game Over!</h3>
+			  <p>Your Max Score: {this.props.maxScore} </p>
 			</div>
     );
   }
@@ -285,28 +413,32 @@ React.render(
 );
 
 /*External Components*/
-var scoreData = [
-	{
-		id:1,
-		owner:'Andres',
-		score: 36,
-		date: new Date()
-	},
-	{
-		id:2,
-		owner:'Lilandra',
-		score: 4,
-		date: new Date()
-	},
-	{
-		id:3,
-		owner:'Jose',
-		score: 6,
-		date: new Date()
-	}
-];
-
 var IntroWrapper = React.createClass({
+	clickBasic: function (){
+		GameVariables.changeLevel('basic');
+		this.loadIntroAnimation();
+  },
+	clickRotational: function(){
+		GameVariables.changeLevel('rotational');
+		this.loadIntroAnimation();
+	},
+	clickOverlap: function(){
+		GameVariables.changeLevel('overlap');
+		this.loadIntroAnimation();
+	},
+	clickBlind: function(){
+		GameVariables.changeLevel('blind');
+		this.loadIntroAnimation();
+	},
+	loadIntroAnimation: function(){
+		$(GameVariables.introContainer).addClass('animated zoomOutRight');
+		$(GameVariables.introContainer).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', this.finishIntroAnimation);
+	},
+	finishIntroAnimation: function(){
+		$(GameVariables.gameContainer).removeClass('hide');
+		$(GameVariables.introContainer).addClass('hide');
+		$(GameVariables.gameContainer).addClass('animated zoomInRight');
+	},
   render: function(){
     return (
 			<div className="introWrapper">
@@ -316,14 +448,15 @@ var IntroWrapper = React.createClass({
 				<div className="large-centered large-7 columns">
 					<p>How are your memory today? try! and do your best!</p>
 					<ul className="button-group round">
-						<li><a href="#" className="button">Basic</a></li>
-						<li><a href="#" className="button yellow">Rotational</a></li>
-						<li><a href="#" className="button orange">Overlap</a></li>
-						<li><a href="#" className="button red">Blind</a></li>
+						<li><a href="#" onClick={this.clickBasic} className="button">Basic</a></li>
+						<li><a href="#" onClick={this.clickRotational} className="button yellow">Rotational</a></li>
+						<li><a href="#" onClick={this.clickOverlap} className="button orange">Overlap</a></li>
+						<li><a href="#" onClick={this.clickBlind} className="button red">Blind</a></li>
 					</ul>
 				</div>
 				<div className="best-points">
-					<ScoresTable scoreData="scoreData" />
+					<h4>Best Scores</h4>
+					<ScoresTable scoreData={scoreData} />
 				</div>
 			</div>
     );
@@ -346,14 +479,17 @@ var ScoreRow = React.createClass({
 var ScoresTable = React.createClass({
   render: function() {
 		var rows = this.props.scoreData.map(function(score) {
-				return <ScoreRow key={score.id} score={score} />;
+			return <ScoreRow key={score.id} score={score} />;
 		});
     return (
       <div className="scoresTable">
 				<table>
 					<thead>
-						<tr>Owner</tr>
-						<tr>Score</tr>
+						<tr>
+							<td>Owner</td>
+							<td>Score</td>
+							<td>Date</td>
+						</tr>
 					</thead>
 					<tbody>
 						{rows}
@@ -363,6 +499,27 @@ var ScoresTable = React.createClass({
     );
   }
 });
+
+var scoreData = [
+	{
+		id:1,
+		owner:'Andres',
+		score: 36,
+		date: '2015-06-01'
+	},
+	{
+		id:2,
+		owner:'Lilandra',
+		score: 4,
+		date: '2015-01-01'
+	},
+	{
+		id:3,
+		owner:'Jose',
+		score: 6,
+		date: '2015-06-08'
+	}
+];
 
 React.render(
   <IntroWrapper />,
