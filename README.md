@@ -1,5 +1,5 @@
-# Mind Break
-Mind Break is based on "simon says" game, purpose of this code is to test React.js, making a simple component trying to use the 
+# Brain Break
+Brain Break is based on "simon says" game, purpose of this code is to test React.js, making a simple component trying to use the
 basic React functionality, in next versions code will be improved, using more React.js patterns (like Flux) and other javascript
 libraries like gulp.js and node.js.
 
@@ -18,7 +18,7 @@ React.js
 Jquery.js
 
 ### Intro
-![Mind Break](http://i.imgur.com/onA3k27.png)
+![Brain Break](http://i.imgur.com/onA3k27.png)
 
 ### Game
-![Mind Break](http://i.imgur.com/qQiJbBG.png)
+![Brain Break](http://i.imgur.com/qQiJbBG.png)
