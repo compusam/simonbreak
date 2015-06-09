@@ -16,3 +16,9 @@ Use last versions of Chrome, Firefox, Opera or IE 11.
 Underscore.js
 React.js
 Jquery.js
+
+### Intro
+![Mind Break](http://i.imgur.com/onA3k27.png)
+
+### Game
+![Mind Break](http://i.imgur.com/qQiJbBG.png)
