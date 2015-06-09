@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'simon';
+    src: url('../assets/neuro.ttf'); /* IE9 Compat Modes */
+    url('../assets/neuro.ttf') format('ttf'); /* Modern Browsers */
+}
+
+html,
+body, h1,h2,h3,h4,h5,h6,p {
+	font-family: 'simon', Arial, sans-serif;	
+}
+
+html,
+body {
+  height: 100%;
+	
+}
+
+.game-wrapper {
+	border: 20px solid #c3c3c3;
+	height: 100%;
+	padding: 20px;
+}
+
+.simonContainer {
+	background-color: #2d2d2d;
+	border-radius: 50%;
+	box-shadow: 0px 0px 20px 5px #888888;
+	height: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	width: 400px;
+	/*
+	-webkit-animation: pulse 10s  infinite alternate;
+	 animation: pulse 10s  infinite alternate;
+	*/
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	transform: rotate(0deg);
+	transition-duration:0.4s;
+}
+.rotate {
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	transition-duration:0.4s;
+}
+
+.simonLeftTop,
+.simonRightTop,
+.simonLeftBottom,
+.simonRightBottom
+{
+	height: 190px;
+	margin: 5px;
+	width: 190px;
+	float: left;
+	transition: background-color .1s  ease-in-out;
+	-webkit-box-shadow: inset 10px -8px 17px -9px rgba(0,0,0,0.65);
+	-moz-box-shadow: inset 10px -8px 17px -9px rgba(0,0,0,0.65);
+	box-shadow: inset 10px -8px 17px -9px rgba(0,0,0,0.65);
+	z-index:10;
+}
+
+.simonLeftTop {
+  border-top-left-radius: 100%;	
+}
+	.simonLeftTopBaseColor{
+		background-color: #2EFE2E !important;
+	}
+
+.simonRightTop {
+	border-top-right-radius: 100%;	
+}
+	.simonRightTopBaseColor {
+		background-color: #FF0000 !important;
+	}
+
+.simonLeftBottom {
+	border-bottom-left-radius: 100%;	
+}
+	.simonLeftBottomBaseColor{
+		background-color: #FFFF00 !important;
+	}
+
+.simonRightBottom {
+	border-bottom-right-radius: 100%;	
+}
+	.simonRightBottomBaseColor{
+		background-color: #0080FF !important;
+	}
+
+.selected-side {
+	background-color: #fff;
+}
+
+.simonCounter {
+	background-color: #2d2d2d;
+	border-radius:50%;
+	height: 100px;	
+	left: 150px;
+	position: absolute;
+	padding-top: 20px;
+	text-align: center;
+	top: 150px;
+	width: 100px;
+	z-index: 1;
+}
+	.simonCounter h2 {
+		color: #fff;
+	}
+
+.gameOver{
+	display: none;
+	text-align: center;
+}
+
+.yellow {
+	background-color: #E8D42F;
+}
+
+.orange {
+	background-color: #FE7E22;
+}
+
+.red {
+	background-color: #CE3C0C;
+}
+
+.scoresTable table {
+	width: 100%;
+}
+
+.blindModeSteps {
+	margin-top: 30px;
+	text-align: center;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+   -webkit-transform: rotate(360deg);
+  }
+}
+
+.actionButtons {
+	margin-top: 30px;
+}
+	.actionButtons a.button {
+		width: 50%;
+	}
