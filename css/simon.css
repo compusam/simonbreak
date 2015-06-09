@@ -70,28 +70,28 @@ body {
   border-top-left-radius: 100%;	
 }
 	.simonLeftTopBaseColor{
-		background-color: #2EFE2E;	
+		background-color: #2EFE2E !important;
 	}
 
 .simonRightTop {
 	border-top-right-radius: 100%;	
 }
 	.simonRightTopBaseColor {
-		background-color: #FF0000;
+		background-color: #FF0000 !important;
 	}
 
 .simonLeftBottom {
 	border-bottom-left-radius: 100%;	
 }
 	.simonLeftBottomBaseColor{
-		background-color: #FFFF00;
+		background-color: #FFFF00 !important;
 	}
 
 .simonRightBottom {
 	border-bottom-right-radius: 100%;	
 }
 	.simonRightBottomBaseColor{
-		background-color: #0080FF;
+		background-color: #0080FF !important;
 	}
 
 .selected-side {
@@ -133,6 +133,11 @@ body {
 
 .scoresTable table {
 	width: 100%;
+}
+
+.blindModeSteps {
+	margin-top: 30px;
+	text-align: center;
 }
 
 @-webkit-keyframes pulse {

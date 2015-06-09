@@ -6,6 +6,10 @@ var constants = (function(){
 		leftBottom: '../assets/leftBottom.mp3',
 		rightTop: '../assets/rightTop.mp3',
 		rightBottom: '../assets/rightBottom.mp3',
-		gameOverSound : ''
+		gameOverSound : '',
+		leftTopElementClass: '.simonLeftTop',
+		rightTopElementClass: '.simonRightTop',
+		leftBottomElementClass: '.simonLeftBottom',
+		rightBottomElementClass: '.simonRightBottom'
 	}
 })();
