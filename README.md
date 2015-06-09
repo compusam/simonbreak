@@ -1,6 +1,7 @@
 # Mind Break
 Mind Break is based on "simon says" game, purpose of this code is to test React.js, making a simple component trying to use the 
-basic React functionality, in next versions code will be improved, using mas React.js patterns (like Flux). 
+basic React functionality, in next versions code will be improved, using more React.js patterns (like Flux) and other javascript
+libraries like gulp.js and node.js.
 
 # Version 1.0
 4 Levels
