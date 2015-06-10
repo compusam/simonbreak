@@ -4,14 +4,11 @@ var data = [
 ];
 
 var MeasuresBox = React.createClass({displayName: "MeasuresBox",
-  getInitialState: function() {
-    return {data: []};
-  },
   render: function(){
     return (
       React.createElement("div", {className: "measuresBox"}, 
        
-        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentList, null), 
         React.createElement(CommentForm, null)
       )
     );
@@ -34,15 +31,11 @@ var Comment = React.createClass({displayName: "Comment",
 
 var CommentList = React.createClass({displayName: "CommentList",
   render: function() {
-    var commentNodes = this.props.data.map(function(comment){
-      return (
-        React.createElement(Comment, {author: comment.author}, comment.text)
-      );
-    });
     return (
       React.createElement("div", {className: "commentList"}, 
-        commentNodes
-       )
+        React.createElement(Comment, {author: "Pete Hunt"}, "First Comment"), 
+        React.createElement(Comment, {author: "Jordan Walke"}, "Another Comment")
+      )
     );
   }
 });

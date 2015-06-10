@@ -11,7 +11,7 @@ var MeasuresBox = React.createClass({displayName: "MeasuresBox",
     return (
       React.createElement("div", {className: "measuresBox"}, 
        
-        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentList, null), 
         React.createElement(CommentForm, null)
       )
     );

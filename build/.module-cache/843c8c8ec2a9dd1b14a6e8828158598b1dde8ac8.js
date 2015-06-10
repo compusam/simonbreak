@@ -4,14 +4,11 @@ var data = [
 ];
 
 var MeasuresBox = React.createClass({displayName: "MeasuresBox",
-  getInitialState: function() {
-    return {data: []};
-  },
   render: function(){
     return (
       React.createElement("div", {className: "measuresBox"}, 
        
-        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentList, null), 
         React.createElement(CommentForm, null)
       )
     );
