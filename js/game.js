@@ -490,10 +490,10 @@ var IntroWrapper = React.createClass({
     return (
 			<div className="introWrapper">
 				<h2>Welcome to Brain Break!</h2>
-				<p className="panel">Bran Break! is a game based on the principles of "Saimon Says" a game to
+				<p className="panel">Brain Break! is a game based on the principles of "Saimon Says" a game to
 				exercise your memory, Brain Break has new challenges for your memory!</p>
 				<div className="large-centered large-7 columns">
-					<p>How are your memory today? try! and do your best!</p>
+					<p>How is your memory today? try! and do your best!</p>
 					<ul className="button-group round">
 						<li><a href="#" onClick={this.clickBasic} className="button">Basic</a></li>
 						<li><a href="#" onClick={this.clickRotational} className="button yellow">Rotational</a></li>
