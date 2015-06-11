@@ -1,60 +1,33 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Simonbreak : Memory game, based on &quot;simon says&quot; game, developed with React.js">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Simonbreak</title>
-  </head>
-
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+		<script src="lib/foundation/js/vendor/modernizr.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+		<script src="lib/underscore_1.8.3.js"></script>
+		<link rel="stylesheet" href="lib/foundation/css/foundation.css" />		
+		<link rel="stylesheet" href="css/simon.css" />		
+		<link rel="stylesheet" href="lib/animate.css" />
+	</head>
   <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/gara501/simonbreak">View on GitHub</a>
-
-          <h1 id="project_title">Simonbreak</h1>
-          <h2 id="project_tagline">Memory game, based on &quot;simon says&quot; game, developed with React.js</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/gara501/simonbreak/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/gara501/simonbreak/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
-<a id="welcome-to-brain-break" class="anchor" href="#welcome-to-brain-break" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Brain Break</h2>
-
-<p>Brain Break is a game based on "Simon Says" game, the purpose of this code is learn React.js. Version 1.0 include 4 different levels, variations of the original game. Code and game experience will be improved in future versions. </p>
-
-<h3>
-<a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Libraries</h3>
-
-<p>Underscore 1.8, React 0.3.13, Jquery 1.11, in the future gulp and nodeJs will be implemented.</p>
-
-<p><img src="http://i.imgur.com/qQiJbBG.png" alt="Brain Break"></p>
-				<a href="game/index.html">DEMO</a>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Simonbreak maintained by <a href="https://github.com/gara501">gara501</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+		<div class="game-wrapper">
+			<div class="row intro">
+				<div class="intro-content">
+					
+				</div>
+			</div>
+			<div class="row game hide">
+				<div class="large-6 large-centered columns">
+					<div class="content"></div>
+					<div class="action"></div>
+				</div>
+			</div>		
+		</div>
+	  <script src="lib/foundation/js/vendor/jquery.js"></script>
+		<script src="lib/foundation/js/foundation.min.js"></script>
+		<script src="lib/webaudiox.js"></script>
+		<script type="text/jsx" src="js/constants.js"></script>
+    <script type="text/jsx" src="js/game.js"></script>
   </body>
 </html>
