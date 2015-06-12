@@ -1,43 +1,3 @@
-var GameVariables = (function(){
-	var level = 'basic';
-	var introContainer = $('.intro');
-	var gameContainer = $('.game');
-	var initialColors = {
-		leftTopBackground:'#2EFE2E',
-		leftBottomBackground:'#FFFF00',
-		rightTopBackground:'#FF0000',
-		rightBottomBackground:'#0080FF'
-	};
-			
-	var changeLevel = function(levelValue) {
-		this.level = levelValue;
-	};
-	
-	var dateNow = function() {
-		var today = new Date();
-		var year = today.getFullYear();
-		var month = today.getMonth();
-		var day = today.getDay();
-		
-		if (month <= 9){
-			month = '0' + month;
-		}
-		if (day <= 9){
-			day = '0'+day;
-		}
-		return  year+'/'+month+'/'+day;
-	};
-	
-	return{
-		introContainer:introContainer,
-		gameContainer:gameContainer,
-		level: level,
-		changeLevel:changeLevel,
-		initialColors:initialColors,
-		dateNow: dateNow
-	}
-})();
-
 var SimonWrapper = React.createClass({
 	getInitialState: function(){
 			return { 
@@ -81,7 +41,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(1);	
 		this.setState({pressedSequence: this.state.pressedSequence});
-		this.animationSelect(constants.leftTopElementClass, constants.leftTop, 0);
+		this.animationSelect(Constants.leftTopElementClass, Constants.leftTop, 0);
 		this.setSequenceValue();
   },
 	incrementRightTop: function(){
@@ -89,7 +49,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(2);	
 		this.setState({pressedSequence: this.state.pressedSequence});
-		this.animationSelect(constants.rightTopElementClass, constants.rightTop, 0);
+		this.animationSelect(Constants.rightTopElementClass, Constants.rightTop, 0);
 		this.setSequenceValue();
   },
 	incrementLeftBottom: function(){
@@ -97,7 +57,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(4);	
 		this.setState({pressedSequence: this.state.pressedSequence});
-		this.animationSelect(constants.leftBottomElementClass, constants.leftBottom, 0);
+		this.animationSelect(Constants.leftBottomElementClass, Constants.leftBottom, 0);
 		this.setSequenceValue();
   },
 	incrementRightBottom: function(){
@@ -105,7 +65,7 @@ var SimonWrapper = React.createClass({
 		this.setState({total: this.state.total + 1});
 		this.state.pressedSequence.push(3);	
 		this.setState({pressedSequence: this.state.pressedSequence});
-		this.animationSelect(constants.rightBottomElementClass, constants.rightBottom, 0);
+		this.animationSelect(Constants.rightBottomElementClass, Constants.rightBottom, 0);
 		this.setSequenceValue();
   },
 	generateSequence: function() {
@@ -117,16 +77,16 @@ var SimonWrapper = React.createClass({
 		this.animateSecuence();
 	},
 	keyQ: function(){
-		this.audio(constants.leftTop);
+		this.audio(Constants.leftTop);
 	},
 	keyW: function(){
-		this.audio(constants.rightTop);
+		this.audio(Constants.rightTop);
 	},
 	keyA: function(){
-		this.audio(constants.leftBottom);
+		this.audio(Constants.leftBottom);
 	},
 	keyS: function(){
-		this.audio(constants.rightBottom);
+		this.audio(Constants.rightBottom);
 	},
 	animateSecuence: function() {	
 		var elementToAnimate='';
@@ -135,20 +95,20 @@ var SimonWrapper = React.createClass({
 		for(var counter=0; counter<= this.state.sequence.length-1; counter++){
 				switch (this.state.sequence[counter]){
 					case 1:
-						elementToAnimate = constants.leftTopElementClass;
-						audioElement = constants.leftTop;
+						elementToAnimate = Constants.leftTopElementClass;
+						audioElement = Constants.leftTop;
 						break;
 					case 2:
-						elementToAnimate = constants.rightTopElementClass;
-						audioElement = constants.rightTop;
+						elementToAnimate = Constants.rightTopElementClass;
+						audioElement = Constants.rightTop;
 						break;
 					case 3:
-						elementToAnimate = constants.rightBottomElementClass;
-						audioElement = constants.rightBottom;
+						elementToAnimate = Constants.rightBottomElementClass;
+						audioElement = Constants.rightBottom;
 						break;
 					case 4:
-						elementToAnimate = constants.leftBottomElementClass;
-						audioElement = constants.leftBottom;
+						elementToAnimate = Constants.leftBottomElementClass;
+						audioElement = Constants.leftBottom;
 						break;
 				}
 			this.animationSelect(elementToAnimate, audioElement, delay);
@@ -278,7 +238,7 @@ var SimonWrapper = React.createClass({
 			this.setState({maxScore: this.state.maxScore });
 		}
 		this.savePoints();
-		this.audio(constants.errorSound);
+		this.audio(Constants.errorSound);
 		$('.gameOver').show();
 		$('.newGame').text('Restart Game');
 	},
@@ -493,7 +453,7 @@ var IntroWrapper = React.createClass({
 				<p className="panel">Bran Break! is a game based on the principles of "Saimon Says" a game to
 				exercise your memory, Brain Break has new challenges for your memory!</p>
 				<div className="large-centered large-7 columns">
-					<p>How are your memory today? try! and do your best!</p>
+					<p>How is your memory today? try! and do your best!</p>
 					<ul className="button-group round">
 						<li><a href="#" onClick={this.clickBasic} className="button">Basic</a></li>
 						<li><a href="#" onClick={this.clickRotational} className="button yellow">Rotational</a></li>

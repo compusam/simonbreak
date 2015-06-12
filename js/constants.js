@@ -1,4 +1,4 @@
-var constants = (function(){
+var Constants = (function(){
 	return{
 		okSound: '../assets/good.mp3',
 		errorSound: '../assets/bad.mp3',
@@ -10,6 +10,8 @@ var constants = (function(){
 		leftTopElementClass: '.simonLeftTop',
 		rightTopElementClass: '.simonRightTop',
 		leftBottomElementClass: '.simonLeftBottom',
-		rightBottomElementClass: '.simonRightBottom'
+		rightBottomElementClass: '.simonRightBottom',
+		containerIntroElement: '.intro',
+		containerGameElement: '.game'
 	}
 })();
